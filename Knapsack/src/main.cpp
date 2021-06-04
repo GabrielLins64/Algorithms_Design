@@ -8,8 +8,11 @@ int main(int argc, char *argv[])
 {
     Knapsack knap = Knapsack();
     knap.readItemsFromFile(FILEPATH1);
+    // knap.readItemsFromFile(FILEPATH2);
 
     knap.printInstance();
+    Knapsack::solution sol = knap.solveFractionalKnapsack();
+    knap.printSolution(sol);
 
     return 0;
 }
