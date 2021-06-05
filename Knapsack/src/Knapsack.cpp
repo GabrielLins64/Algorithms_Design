@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 #define _DEBUG false
 
@@ -77,10 +78,7 @@ Knapsack::solution Knapsack::solveFractionalKnapsack()
 
     float remainingWeight = float(this->size);
     float totalValue = 0;
-    std::vector<float> fractionalVec;
-
-    for (int i = 0; i < costBenefictVec.size(); i++)
-        fractionalVec.push_back(0.0);
+    std::vector<float> fractionalVec(costBenefictVec.size(), 0.0);
 
     int i;
     for (i = 0; i < costBenefictVec.size(); i++)
@@ -102,6 +100,37 @@ Knapsack::solution Knapsack::solveFractionalKnapsack()
 
     result.totalValue = totalValue;
     result.solution = fractionalVec;
+
+    return result;
+}
+
+Knapsack::solution Knapsack::solveUnboundedKnapsack()
+{
+    Knapsack::solution result;
+    std::vector<float> solution[this->size + 1];
+    for (int i = 0; i <= this->size; i++)
+        solution[i] = std::vector<float>(this->items.size(), 0.0);
+    int valueForWeight[this->size + 1];
+    std::memset(valueForWeight, 0, sizeof valueForWeight);
+
+    for (int i = 0; i <= this->size; i++)
+    {
+        for (int j = 0; j < this->items.size(); j++)
+        {
+            int w = this->items[j].second;
+            if (w <= i) {
+                int val = this->items[j].first;
+                if (valueForWeight[i - w] + val > valueForWeight[i]) {
+                    valueForWeight[i] = valueForWeight[i - w] + val;
+                    solution[i] = solution[i - w];
+                    solution[i][j] += 1;
+                }
+            }
+        }
+    }
+
+    result.totalValue = valueForWeight[this->size];
+    result.solution = solution[this->size];
 
     return result;
 }

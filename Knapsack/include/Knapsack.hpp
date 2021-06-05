@@ -25,6 +25,7 @@ public:
     void setItem(int index, int value, int weight);
     void readItemsFromFile(std::string filepath);
     solution solveFractionalKnapsack();
+    solution solveUnboundedKnapsack();
     void printInstance();
     void printSolution(solution sol);
 };
