@@ -9,23 +9,26 @@
 class Knapsack
 {
 private:
-    std::map<int, std::pair<int, int>> items;
-    struct solution {
-        int totalValue;
-        std::vector<float> solution;
-    };
+    std::map<int, std::pair<float, float>> items;
     int size;
 
 public:
     Knapsack() {};
     ~Knapsack() {};
+    struct solution {
+        int totalValue;
+        std::vector<float> solution;
+    };
 
     int getSize();
     void setSize(int size);
     void setItem(int index, int value, int weight);
     void readItemsFromFile(std::string filepath);
     solution solveFractionalKnapsack();
+    solution solveUnboundedKnapsack();
+    solution solve01Knapsack();
     void printInstance();
+    void printSolution(solution sol);
 };
 
 #endif
