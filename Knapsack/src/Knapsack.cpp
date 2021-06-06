@@ -135,6 +135,53 @@ Knapsack::solution Knapsack::solveUnboundedKnapsack()
     return result;
 }
 
+Knapsack::solution Knapsack::solve01Knapsack()
+{
+    Knapsack::solution result;
+    int values[this->items.size() + 1][this->size + 1];
+    std::vector<float> solution(this->items.size(), 0.0);
+
+    for (int i = 0; i <= this->items.size(); i++)
+        std::memset(values[i], 0, sizeof values[i]);
+    
+    for (int i = 1; i <= this->items.size(); i++)
+    {
+        for (int w = 1; w <= this->size; w++)
+        {
+            int preWeight = this->items[i - 1].second;
+            if (preWeight <= w) {
+                int preVal = this->items[i - 1].first;
+                if (preVal + values[i - 1][w - preWeight] > values[i - 1][w]) {
+                    values[i][w] = preVal + values[i - 1][w - preWeight];
+                }
+                else {
+                    values[i][w] = values[i - 1][w];
+                }
+            }
+            else
+                values[i][w] = values[i - 1][w];
+        }
+    }
+
+    int maxVal = values[this->items.size()][this->size];
+    result.totalValue = maxVal;
+
+    for (int i = this->items.size(), w = this->size; i > 0 && maxVal > 0; i--)
+    {
+        if (maxVal == values[i - 1][w])
+            continue;
+        else {
+            solution[i - 1] = 1;
+            maxVal -= this->items[i - 1].first;
+            w -= this->items[i - 1].second;
+        }
+    }
+
+    result.solution = solution;
+
+    return result;
+}
+
 void Knapsack::printInstance()
 {
     std::cout << "Knap size: " << Knapsack::getSize() << std::endl;
