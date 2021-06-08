@@ -104,6 +104,59 @@ Knapsack::solution Knapsack::solveFractionalKnapsack()
     return result;
 }
 
+Knapsack::solution Knapsack::solveGreedyUnboundedKnapsack()
+{
+    Knapsack::solution result;
+    std::vector<std::pair<int, float>> costBenefictVec;
+
+    costBenefictVec.push_back(
+        std::make_pair(
+            0, 
+            this->items[0].first / this->items[0].second
+        )
+    );
+
+    for (int i = 1; i < this->items.size(); i++)
+    {
+        float costBenefict = this->items[i].first
+                           / this->items[i].second;
+
+        int j = 0;
+        while (j < costBenefictVec.size() && costBenefictVec[j].second >= costBenefict)
+        {
+            j++;
+        }
+
+        costBenefictVec.insert(
+            costBenefictVec.begin() + j,
+            std::make_pair(i, costBenefict)
+        );
+    }
+
+    float remainingWeight = float(this->size);
+    float totalValue = 0;
+    std::vector<float> itemsVec(costBenefictVec.size(), 0.0);
+
+    int i;
+    for (i = 0; i < costBenefictVec.size(); i++)
+    {
+        int itemValue = this->items[costBenefictVec[i].first].first;
+        int itemWeight = this->items[costBenefictVec[i].first].second;
+
+        while (remainingWeight - itemWeight >= 0)
+        {
+            remainingWeight -= itemWeight;
+            itemsVec[costBenefictVec[i].first] += 1.0;
+            totalValue += itemValue;
+        }
+    }
+
+    result.totalValue = totalValue;
+    result.solution = itemsVec;
+
+    return result;
+}
+
 Knapsack::solution Knapsack::solveUnboundedKnapsack()
 {
     Knapsack::solution result;
