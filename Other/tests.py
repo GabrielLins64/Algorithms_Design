@@ -1,18 +1,19 @@
 import coin_change as cc
 import rod_cutting as rc
 
-# COIN_CHANGE_ARR = [25, 10, 5, 1]
-COIN_CHANGE_ARR = [25, 10, 5, 2]
-COIN_CHANGE_N   = 13
+# COIN_CHANGE_ARR = [25, 10, 5, 2]
+COIN_CHANGE_ARR = [1, 5, 10, 25]
+COIN_CHANGE_N   = 163
 
 def test_coin_change_problem():
     coins = COIN_CHANGE_ARR
     n = COIN_CHANGE_N
     res = cc.dinamic_programming_coin_change(coins, n)
     
-    print(f"Solutions ({res['amount']}):")
-    for sol in res['solution']:
-        print(sol)
+    print(f"Solutions: {res['amount']}")
+    print(f"Best solution: {res['solution']}")
+    print(f"Coins: {res['coins']}")
+    print(f"Number of coins: {res['num_coins']}")
 
 # ROD_CUTTING_ARR = [1, 5, 8, 9, 10, 17, 17, 20]
 ROD_CUTTING_ARR = [1, 5, 8, 9, 10, 17, 17, 20, 22]

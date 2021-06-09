@@ -17,8 +17,15 @@ def dinamic_programming_coin_change(coins, n):
             ways[x].extend(combine(ways[x - coin], coin))
 
     solutions = [x for x in ways[n] if np.sum(x) == n]
+
+    res_coins = [0] * len(coins)
+    for idx, coin in enumerate(coins):
+        res_coins[idx] = solutions[-1].count(coin)
+
     solution = {
-        "solution": solutions,
+        "solution": solutions[-1],
+        "coins": res_coins,
+        "num_coins": np.sum(res_coins),
         "amount": table[n]
     }
     return solution
