@@ -1,5 +1,7 @@
+import json
 import coin_change as cc
 import rod_cutting as rc
+import subsequence as ss
 
 # COIN_CHANGE_ARR = [25, 10, 5, 2]
 COIN_CHANGE_ARR = [1, 5, 10, 25]
@@ -32,3 +34,14 @@ def test_rod_cutting_problem():
     for idx in res['cuts']:
         val_sum += prices[idx]
     print(f"Sum: {val_sum}")
+
+LDS_DATAPATH = "data/lds_input_1.json"
+
+def test_longest_decreasing_subsequence():
+    with open(LDS_DATAPATH) as f:
+        arr = json.load(f)
+
+    result = ss.longest_decreasing_subsequence(arr)
+
+    print(f"Longest descreasing sequence: {result}")
+    print("Length of LDS:", len(result))    
