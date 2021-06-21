@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 
     // knap.printInstance();
     // Knapsack::solution sol = knap.solveFractionalKnapsack();
-    // Knapsack::solution sol = knap.solveUnboundedKnapsack();
-    Knapsack::solution sol = knap.solveGreedyUnboundedKnapsack();
+    Knapsack::solution sol = knap.solveUnboundedKnapsack();
+    // Knapsack::solution sol = knap.solveGreedyUnboundedKnapsack();
     // Knapsack::solution sol = knap.solve01Knapsack();
     knap.printSolution(sol);
 
