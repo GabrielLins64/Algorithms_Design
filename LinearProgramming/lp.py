@@ -45,3 +45,22 @@ def solve_knapsack(input_path=FILEPATH):
   print(f"Used items {np.sum(used)}: {used}")
   print(f"Percentage used of the knapsack: {round(100 * total_weight / W, 2)} %")
   print(f"Total value: {pulp.value(problem.objective)}")
+
+def solve_mining_problem():
+  problem = pulp.LpProblem("Problema da Mineradora", pulp.LpMaximize)
+
+  ll = pulp.LpVariable("Liga Leve", 0, cat="Integer")
+  lr = pulp.LpVariable("Liga Rígida", 0, cat="Integer")
+  lf = pulp.LpVariable("Liga Forte", 0, cat="Integer")
+
+  problem += 250*ll + 300*lr + 400*lf # Função objetivo
+
+  # (qtd. de minério que cada liga usa * a qtd. da liga)
+  problem += 5*ll + 3*lr + 5*lf <= 100 # Para o minério vermelho
+  problem += 3*ll + 5*lr + 5*lf <= 80 # Para o minério preto
+
+  problem.solve()
+
+  print(f"Quantidade de Ligas leves: {ll.varValue}")
+  print(f"Quantidade de Ligas rígidas: {lr.varValue}")
+  print(f"Quantidade de Ligas fortes: {lf.varValue}")
