@@ -33,6 +33,8 @@ void Knapsack::readItemsFromFile(std::string filepath)
         if (file.eof())
             break;
     }
+
+    file.close();
 }
 
 void Knapsack::setItem(int index, int value, int weight)
